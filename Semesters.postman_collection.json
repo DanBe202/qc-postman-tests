@@ -1,0 +1,1062 @@
+{
+	"info": {
+		"_postman_id": "0823a459-7b66-4224-bef7-c0e5441fe14b",
+		"name": "Semesters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31710031",
+		"_collection_link": "https://cloudy-space-261172.postman.co/workspace/schedule-app~e1eb4263-f471-4b6a-b44c-878844cc12d4/collection/31710031-0823a459-7b66-4224-bef7-c0e5441fe14b?action=share&source=collection_link&creator=31710031"
+	},
+	"item": [
+		{
+			"name": "create-semsester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 201\", function() { ",
+							"    pm.response.to.have.status(201); ",
+							"});",
+							"",
+							"pm.test(\"Semester id exists\", function() { ",
+							"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Semester days are not empty\", function() { ",
+							"    pm.expect(pm.response.json().semester_days).to.be.not.empty;",
+							"});",
+							"",
+							"pm.test(\"Semester classes are not empty\", function() { ",
+							"    pm.expect(pm.response.json().semester_classes).to.be.not.empty;",
+							"});",
+							"",
+							"pm.environment.set(\"semester_id_first\", pm.response.json().id)",
+							"pm.environment.set(\"first_days\", pm.response.json().semester_days)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currentSemester\": false,\n    \"defaultSemester\": false,\n    \"description\": \"{{semesterDescription}}\",\n    \"endDay\": \"06/10/2025\",\n    \"semester_classes\": [],\n    \"semester_days\": [],\n    \"semester_groups\": [],\n    \"startDay\": \"02/05/2025\",\n    \"year\": 2025\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-semsester-with-day",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 201\", function() { ",
+							"    pm.response.to.have.status(201); ",
+							"});",
+							"",
+							"pm.test(\"Semester id exists\", function() { ",
+							"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Semester days are not empty\", function() { ",
+							"    pm.expect(pm.response.json().semester_days).to.be.not.empty;",
+							"});",
+							"",
+							"pm.test(\"Semester classes are not empty\", function() { ",
+							"    pm.expect(pm.response.json().semester_classes).to.be.not.empty;",
+							"});",
+							"",
+							"pm.environment.set(\"semester_id_second\", pm.response.json().id)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currentSemester\": false,\n    \"defaultSemester\": false,\n    \"description\": \"{{semesterDescription}}2\",\n    \"endDay\": \"06/10/2025\",\n    \"id\": 100,\n    \"semester_classes\": [\n        {\n            \"id\": 1,\n            \"startTime\": \"08:20\",\n            \"endTime\": \"09:40\",\n            \"class_name\": \"1\"\n        }\n    ],\n    \"semester_days\": [\n        \"MONDAY\"\n    ],\n    \"semester_groups\": [],\n    \"startDay\": \"02/05/2025\",\n    \"year\": 2025\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-empty-semsester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Fails with missing fields\", function() { ",
+							"    pm.response.to.have.status(400); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "copy-semester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"",
+							"pm.test(\"Is copied right\", function () {",
+							"    var semesterDays = pm.response.json().semester_days;",
+							"    pm.expect(pm.environment.get(first_days)).to.eql(semesterDays);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/copy-semester?fromSemesterId={{semester_id_first}}&toSemesterId={{semester_id_second}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"copy-semester"
+					],
+					"query": [
+						{
+							"key": "fromSemesterId",
+							"value": "{{semester_id_first}}"
+						},
+						{
+							"key": "toSemesterId",
+							"value": "{{semester_id_second}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-public-semesters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"}); ",
+							"",
+							"pm.test(\"Returns array\", function() {",
+							"     pm.expect(pm.response.json()).to.be.an(\"array\"); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/public/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"public",
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-semesters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"}); ",
+							"",
+							"pm.test(\"Returns array\", function() {",
+							"     pm.expect(pm.response.json()).to.be.an(\"array\"); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-semesters-unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 403\", function() { ",
+							"    pm.response.to.have.status(403); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-semester-by-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/{{semester_id_first}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"{{semester_id_first}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-semester-by-wrong-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 404\", function() { ",
+							"    pm.response.to.have.status(404); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters/9999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"9999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-semester-groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters//{{semester_id_first}}/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"",
+						"{{semester_id_first}}",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-current-semester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/current",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-current-semester-group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/current/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"current",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-default-semester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/default",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-default-semester-group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/default/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"default",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-disabled-semesters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/semesters/disabled",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"disabled"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redact-semsester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Semester days are added\", function() { ",
+							"    pm.expect(pm.response.json().description).to.be.equal(pm.collectionVariables.get(\"redactedDescription\"));",
+							"});",
+							"",
+							"pm.test(\"Semester days are added\", function() { ",
+							"    pm.expect(pm.response.json().semester_days.length).to.be.equal(3);",
+							"});",
+							"",
+							"pm.test(\"Semester classes are added\", function() { ",
+							"    pm.expect(pm.response.json().semester_classes.length).to.be.equal(2);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": {{semester_id_first}},\n    \"description\": \"{{redactedDescription}}\",\n    \"year\": 2025,\n    \"startDay\": \"02/05/2026\",\n    \"endDay\": \"06/10/2026\",\n    \"currentSemester\": false,\n    \"defaultSemester\": false,\n    \"disable\": false,\n    \"semester_days\": [\n        \"MONDAY\",\n        \"TUESDAY\",\n        \"WEDNESDAY\"\n    ],\n    \"semester_classes\": [\n        {\n            \"id\": 1,\n            \"startTime\": \"08:20\",\n            \"endTime\": \"09:40\",\n            \"class_name\": \"1\"\n        },\n        {\n            \"id\": 2,\n            \"startTime\": \"09:50\",\n            \"endTime\": \"11:10\",\n            \"class_name\": \"2\"\n        }\n    ],\n    \"semester_groups\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-semester-group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Semester days are added\", function() { ",
+							"    pm.expect(pm.response.json().semester_groups.some(g => g.id === 30)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    30\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters/{{semester_id_first}}/groups",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"{{semester_id_first}}",
+						"groups"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change-current-semester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Current semester changed\", function () {",
+							"    pm.expect(pm.response.json().currentSemester).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters/current?semesterId={{semester_id_first}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"current"
+					],
+					"query": [
+						{
+							"key": "semesterId",
+							"value": "{{semester_id_first}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change-default-semester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"",
+							"pm.test(\"Default semester changed\", function () {",
+							"    pm.expect(pm.response.json().defaultSemester).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters/default?semesterId={{semester_id_first}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"default"
+					],
+					"query": [
+						{
+							"key": "semesterId",
+							"value": "{{semester_id_first}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-semester",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function() { ",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer_{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/semesters/{{semester_id_second}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"semesters",
+						"{{semester_id_second}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: 'http://localhost:8081/auth/sign-in', ",
+					"    method: 'POST',",
+					"    header: {",
+					"        'Content-Type': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'raw',",
+					"        raw: JSON.stringify(",
+					"            {\"email\": \"new_manager@gmail.com\",",
+					"\"password\":\"String!123\"})",
+					"    }",
+					"}, function (err, response) {",
+					"    if (err) {",
+					"        console.error(err);",
+					"    } else {",
+					"        pm.environment.set(\"token\", response.json().token)",
+					"    }",
+					"})"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "semesterDescription",
+			"value": "Test1",
+			"type": "string"
+		},
+		{
+			"key": "redactedDescription",
+			"value": "Spring 2026",
+			"type": "string"
+		}
+	]
+}

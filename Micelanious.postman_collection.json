@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "9c7f1e09-9a7a-4a72-af19-13e6e8658bcc",
+		"name": "Micelanious",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31710031",
+		"_collection_link": "https://cloudy-space-261172.postman.co/workspace/schedule-app~e1eb4263-f471-4b6a-b44c-878844cc12d4/collection/31710031-9c7f1e09-9a7a-4a72-af19-13e6e8658bcc?action=share&source=collection_link&creator=31710031"
+	},
+	"item": [
+		{
+			"name": "sign-in",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"token\", pm.response.json().token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"email\": \"new_manager@gmail.com\", \"password\": \"String!123\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
